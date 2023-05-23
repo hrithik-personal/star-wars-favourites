@@ -37,7 +37,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 # Application definition
 
-apps = []
+apps = ['favourites', 'planets', 'movies', 'users']
 libs = []
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,6 +91,21 @@ DATABASES = {
     }
 }
 
+# Redis
+REDIS_HOST = env('REDIS_HOST', default='localhost')
+REDIS_DB = env('REDIS_DB', default='0')
+REDIS_PORT = env('REDIS_PORT', default='6379')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_PORT}',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    },
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -109,6 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 
 # Internationalization
@@ -132,3 +149,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Environment variables
+SWAPI_BASE_URL = env.str('SWAPI_BASE_URL')
