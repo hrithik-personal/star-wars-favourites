@@ -25,9 +25,10 @@ bash inital_setup.sh
 
 OR
 
-Activate environment
+Activate virtual environment
 ```sh
 python3 -m venv env
+source env/bin/activate
 ```
 Install dependencies
 ```sh
